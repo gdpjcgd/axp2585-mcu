@@ -1,0 +1,1230 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Administrator\Desktop\PMIC单片机驱动移植\AXPxx_I2C基本读写完成-基于STM32\USER\IIC.uvproj
+Project File Date:  11/27/2015
+
+<h2>Output:</h2>
+compiling axp_regu.c...
+..\axp192-173\axp_mfd.h(23): error:  #20: identifier "bool" is undefined
+..\axp192-173\axp_mfd.h:        bool limit_on;
+..\axp192-173\axp_mfd.h:        ^
+..\axp192-173\axp_mfd.h(56): error:  #70: incomplete type is not allowed
+..\axp192-173\axp_mfd.h:        struct mutex            lock;
+..\axp192-173\axp_mfd.h:                                ^
+..\axp192-173\axp_mfd.h(57): error:  #70: incomplete type is not allowed
+..\axp192-173\axp_mfd.h:        struct work_struct      irq_work;
+..\axp192-173\axp_mfd.h:                                ^
+..\axp192-173\axp_mfd.h(59): error:  #70: incomplete type is not allowed
+..\axp192-173\axp_mfd.h:        struct blocking_notifier_head notifier_list;
+..\axp192-173\axp_mfd.h:                                      ^
+..\axp192-173\axp_mfd.h(328): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:                struct notifier_block *nb, uint64_t irqs);
+..\axp192-173\axp_mfd.h:                       ^
+..\axp192-173\axp_mfd.h(330): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:                struct notifier_block *nb, uint64_t irqs);
+..\axp192-173\axp_mfd.h:                       ^
+..\axp192-173\axp_mfd.h(335): error:  #147-D: declaration is incompatible with "int axp_write(int, u8)" (declared at line 40 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_write(struct device *dev, int reg, uint8_t val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(336): error:  #147-D: declaration is incompatible with "int axp_writes(int, int, u8 *)" (declared at line 55 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_writes(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(337): error:  #147-D: declaration is incompatible with "int axp_read(int, u8 *)" (declared at line 47 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_read(struct device *dev, int reg, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(338): error:  #147-D: declaration is incompatible with "int axp_reads(int, int, u8 *)" (declared at line 68 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_reads(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(339): error:  #147-D: declaration is incompatible with "int axp_update(int, uint8_t, u8)" (declared at line 109 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_update(struct device *dev, int reg, uint8_t val, uint8_t mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(340): error:  #147-D: declaration is incompatible with "int axp_set_bits(int, u8)" (declared at line 80 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_set_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(341): error:  #147-D: declaration is incompatible with "int axp_clr_bits(int, u8)" (declared at line 95 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_clr_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(343): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_mfd.h:   #endif
+..\axp192-173\axp_mfd.h:         ^
+..\axp192-173\axp_regu.c(52): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_regu.c:                                }
+..\axp192-173\axp_regu.c:                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 4 warnings, 11 errors
+..\axp192-173\axp_regu.c - 11 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling axp_regu.c...
+..\axp192-173\axp_mfd.h(23): error:  #20: identifier "bool" is undefined
+..\axp192-173\axp_mfd.h:        bool limit_on;
+..\axp192-173\axp_mfd.h:        ^
+..\axp192-173\axp_mfd.h(56): error:  #70: incomplete type is not allowed
+..\axp192-173\axp_mfd.h:        struct mutex            lock;
+..\axp192-173\axp_mfd.h:                                ^
+..\axp192-173\axp_mfd.h(57): error:  #70: incomplete type is not allowed
+..\axp192-173\axp_mfd.h:        struct work_struct      irq_work;
+..\axp192-173\axp_mfd.h:                                ^
+..\axp192-173\axp_mfd.h(59): error:  #70: incomplete type is not allowed
+..\axp192-173\axp_mfd.h:        struct blocking_notifier_head notifier_list;
+..\axp192-173\axp_mfd.h:                                      ^
+..\axp192-173\axp_mfd.h(328): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:                struct notifier_block *nb, uint64_t irqs);
+..\axp192-173\axp_mfd.h:                       ^
+..\axp192-173\axp_mfd.h(330): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:                struct notifier_block *nb, uint64_t irqs);
+..\axp192-173\axp_mfd.h:                       ^
+..\axp192-173\axp_mfd.h(335): error:  #147-D: declaration is incompatible with "int axp_write(int, u8)" (declared at line 40 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_write(struct device *dev, int reg, uint8_t val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(336): error:  #147-D: declaration is incompatible with "int axp_writes(int, int, u8 *)" (declared at line 55 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_writes(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(337): error:  #147-D: declaration is incompatible with "int axp_read(int, u8 *)" (declared at line 47 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_read(struct device *dev, int reg, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(338): error:  #147-D: declaration is incompatible with "int axp_reads(int, int, u8 *)" (declared at line 68 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_reads(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(339): error:  #147-D: declaration is incompatible with "int axp_update(int, uint8_t, u8)" (declared at line 109 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_update(struct device *dev, int reg, uint8_t val, uint8_t mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(340): error:  #147-D: declaration is incompatible with "int axp_set_bits(int, u8)" (declared at line 80 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_set_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(341): error:  #147-D: declaration is incompatible with "int axp_clr_bits(int, u8)" (declared at line 95 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_clr_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(343): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_mfd.h:   #endif
+..\axp192-173\axp_mfd.h:         ^
+..\axp192-173\axp_regu.c(52): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_regu.c:                                }
+..\axp192-173\axp_regu.c:                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 4 warnings, 11 errors
+Target not created
+Build target 'Target 1'
+compiling axp_regu.c...
+..\axp192-173\axp_mfd.h(266): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:                struct notifier_block *nb, uint64_t irqs);
+..\axp192-173\axp_mfd.h:                       ^
+..\axp192-173\axp_mfd.h(268): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:                struct notifier_block *nb, uint64_t irqs);
+..\axp192-173\axp_mfd.h:                       ^
+..\axp192-173\axp_mfd.h(273): error:  #147-D: declaration is incompatible with "int axp_write(int, u8)" (declared at line 40 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_write(struct device *dev, int reg, uint8_t val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(274): error:  #147-D: declaration is incompatible with "int axp_writes(int, int, u8 *)" (declared at line 55 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_writes(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(275): error:  #147-D: declaration is incompatible with "int axp_read(int, u8 *)" (declared at line 47 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_read(struct device *dev, int reg, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(276): error:  #147-D: declaration is incompatible with "int axp_reads(int, int, u8 *)" (declared at line 68 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_reads(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(277): error:  #147-D: declaration is incompatible with "int axp_update(int, uint8_t, u8)" (declared at line 109 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_update(struct device *dev, int reg, uint8_t val, uint8_t mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(278): error:  #147-D: declaration is incompatible with "int axp_set_bits(int, u8)" (declared at line 80 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_set_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(279): error:  #147-D: declaration is incompatible with "int axp_clr_bits(int, u8)" (declared at line 95 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_clr_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(281): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_mfd.h:   #endif
+..\axp192-173\axp_mfd.h:         ^
+..\axp192-173\axp_regu.c(52): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_regu.c:                                }
+..\axp192-173\axp_regu.c:                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 4 warnings, 7 errors
+Target not created
+Build target 'Target 1'
+compiling axp_regu.c...
+..\axp192-173\axp_mfd.h(269): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:   extern int axp_write(struct device *dev, int reg, uint8_t val);
+..\axp192-173\axp_mfd.h:                               ^
+..\axp192-173\axp_mfd.h(269): error:  #147-D: declaration is incompatible with "int axp_write(int, u8)" (declared at line 40 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_write(struct device *dev, int reg, uint8_t val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(270): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:   extern int axp_writes(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:                                ^
+..\axp192-173\axp_mfd.h(270): error:  #147-D: declaration is incompatible with "int axp_writes(int, int, u8 *)" (declared at line 55 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_writes(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(271): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:   extern int axp_read(struct device *dev, int reg, uint8_t *val);
+..\axp192-173\axp_mfd.h:                              ^
+..\axp192-173\axp_mfd.h(271): error:  #147-D: declaration is incompatible with "int axp_read(int, u8 *)" (declared at line 47 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_read(struct device *dev, int reg, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(272): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:   extern int axp_reads(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:                               ^
+..\axp192-173\axp_mfd.h(272): error:  #147-D: declaration is incompatible with "int axp_reads(int, int, u8 *)" (declared at line 68 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_reads(struct device *dev, int reg, int len, uint8_t *val);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(273): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:   extern int axp_update(struct device *dev, int reg, uint8_t val, uint8_t mask);
+..\axp192-173\axp_mfd.h:                                ^
+..\axp192-173\axp_mfd.h(273): error:  #147-D: declaration is incompatible with "int axp_update(int, uint8_t, u8)" (declared at line 109 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_update(struct device *dev, int reg, uint8_t val, uint8_t mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(274): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:   extern int axp_set_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:                                  ^
+..\axp192-173\axp_mfd.h(274): error:  #147-D: declaration is incompatible with "int axp_set_bits(int, u8)" (declared at line 80 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_set_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(275): warning:  #231-D: declaration is not visible outside of function
+..\axp192-173\axp_mfd.h:   extern int axp_clr_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:                                  ^
+..\axp192-173\axp_mfd.h(275): error:  #147-D: declaration is incompatible with "int axp_clr_bits(int, u8)" (declared at line 95 of "..\axp192-173\axp_rw_.h")
+..\axp192-173\axp_mfd.h:   extern int axp_clr_bits(struct device *dev, int reg, uint8_t bit_mask);
+..\axp192-173\axp_mfd.h:              ^
+..\axp192-173\axp_mfd.h(277): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_mfd.h:   #endif
+..\axp192-173\axp_mfd.h:         ^
+..\axp192-173\axp_regu.c(52): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_regu.c:                                }
+..\axp192-173\axp_regu.c:                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 9 warnings, 7 errors
+Target not created
+Build target 'Target 1'
+compiling axp_regu.c...
+..\axp192-173\axp_mfd.h(267): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_mfd.h:   #endif
+..\axp192-173\axp_mfd.h:         ^
+..\axp192-173\axp_regu.c(52): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_regu.c:                                }
+..\axp192-173\axp_regu.c:                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=17062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(52): warning:  #1-D: last line of file ends without a newline
+..\axp192-173\axp_regu.c:                                }
+..\axp192-173\axp_regu.c:                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+linking...
+Program Size: Code=17062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling axp_regu.c...
+linking...
+Program Size: Code=17062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(91): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c(58): warning:  #177-D: variable "voltemp" was declared but never referenced
+..\axp192-173\axp_regu.c:       int voltemp;
+..\axp192-173\axp_regu.c:           ^
+..\axp192-173\axp_regu.c(125): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_LDO24OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                       ^
+..\axp192-173\axp_regu.c(131): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                               axp_read(POWER19_LDO24OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                               ^
+..\axp192-173\axp_regu.c(137): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_DC3OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                     ^
+..\axp192-173\axp_regu.c(142): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC1OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                         ^
+..\axp192-173\axp_regu.c(148): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC2OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                         ^
+..\axp192-173\axp_regu.c(164): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:               axp_read(POWER19_LDO24_DC13_CTL, *temp);
+..\axp192-173\axp_regu.c:                                                 ^
+..\axp192-173\axp_regu.c(183): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                                 axp_read(POWER19_LDO3_DC2_CTL, *temp);
+..\axp192-173\axp_regu.c:                                                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 2 warnings, 7 errors
+..\axp192-173\axp_regu.c - 7 Error(s), 2 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(90): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c(58): warning:  #177-D: variable "voltemp" was declared but never referenced
+..\axp192-173\axp_regu.c:       int voltemp;
+..\axp192-173\axp_regu.c:           ^
+..\axp192-173\axp_regu.c(124): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_LDO24OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                       ^
+..\axp192-173\axp_regu.c(130): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                               axp_read(POWER19_LDO24OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                               ^
+..\axp192-173\axp_regu.c(136): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_DC3OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                     ^
+..\axp192-173\axp_regu.c(141): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC1OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                         ^
+..\axp192-173\axp_regu.c(147): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC2OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                         ^
+..\axp192-173\axp_regu.c(163): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:               axp_read(POWER19_LDO24_DC13_CTL, *temp);
+..\axp192-173\axp_regu.c:                                                 ^
+..\axp192-173\axp_regu.c(182): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                                 axp_read(POWER19_LDO3_DC2_CTL, *temp);
+..\axp192-173\axp_regu.c:                                                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 2 warnings, 7 errors
+..\axp192-173\axp_regu.c - 7 Error(s), 2 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c(123): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_LDO24OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                       ^
+..\axp192-173\axp_regu.c(129): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                               axp_read(POWER19_LDO24OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                               ^
+..\axp192-173\axp_regu.c(135): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_DC3OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                     ^
+..\axp192-173\axp_regu.c(140): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC1OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                         ^
+..\axp192-173\axp_regu.c(146): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC2OUT_VOL, *vol);
+..\axp192-173\axp_regu.c:                                                         ^
+..\axp192-173\axp_regu.c(162): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:               axp_read(POWER19_LDO24_DC13_CTL, *temp);
+..\axp192-173\axp_regu.c:                                                 ^
+..\axp192-173\axp_regu.c(181): error:  #75: operand of "*" must be a pointer
+..\axp192-173\axp_regu.c:                                 axp_read(POWER19_LDO3_DC2_CTL, *temp);
+..\axp192-173\axp_regu.c:                                                                 ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 7 errors
+..\axp192-173\axp_regu.c - 7 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c(123): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_LDO24OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                      ^
+..\axp192-173\axp_regu.c(129): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                               axp_read(POWER19_LDO24OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                              ^
+..\axp192-173\axp_regu.c(135): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_DC3OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                    ^
+..\axp192-173\axp_regu.c(140): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC1OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                        ^
+..\axp192-173\axp_regu.c(146): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC2OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 5 errors
+..\axp192-173\axp_regu.c - 5 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(88): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                        break;                                                                                                                                                                                                                                                                  break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=17062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(88): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                        break;                                                                                                                                                                                                                                                                                                  break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=17062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(80): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(87): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                        break;                                                                                                                                                                                                                                                                                                  break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(87): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                        break;                                                                                                                                                                                                                                                                                                  break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(88): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                         break;                                                                                                                                                                                                                                                                                                                                         break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(88): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                         break;                                                                                                                                                                                                                                                                                                                                         break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(80): error:  #2706: case label value has already appeared in this switch at line 70
+..\axp192-173\axp_regu.c:               case LDO3:
+..\axp192-173\axp_regu.c:                    ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 0 warnings, 1 error
+..\axp192-173\axp_regu.c - 1 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(89): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(90): warning:  #111-D: statement is unreachable
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                        break;
+..\axp192-173\axp_regu.c:                                                                                                                                                                                                                                                                                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 1 warning, 0 errors
+..\axp192-173\axp_regu.c - 0 Error(s), 1 Warning(s).
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling axp_regu.c...
+linking...
+Program Size: Code=17062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling axp_regu.c...
+linking...
+Program Size: Code=17062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(50): error:  #20: identifier "LDO2" is undefined
+main.c:         axp_regu_enable(LDO2);
+main.c:                         ^
+main.c(51): error:  #20: identifier "LDO3" is undefined
+main.c:         axp_regu_enable(LDO3);                  
+main.c:                         ^
+main.c(52): error:  #20: identifier "LDO4" is undefined
+main.c:         axp_regu_enable(LDO4);          
+main.c:                         ^
+main.c(53): error:  #20: identifier "LDO5" is undefined
+main.c:         axp_regu_enable(LDO5);                  
+main.c:                         ^
+main.c(54): error:  #20: identifier "DCDC2" is undefined
+main.c:         axp_regu_enable(DCDC2);                 
+main.c:                         ^
+main.c(81): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                          axp_write(0x04, j)   
+main.c:                                                          ^
+main.c(84): error:  #65: expected a ";"
+main.c:                                                         axp_regu_disable(LDO2);
+main.c:                                                         ^
+main.c(87): error:  #20: identifier "DCDC1" is undefined
+main.c:                                                         axp_regu_disable(DCDC1);                        
+main.c:                                                                          ^
+main.c(105): warning:  #223-D: function "axp_read" declared implicitly
+main.c:                                                         axp_read(0x04,&temp);
+main.c:                                                         ^
+main.c(114): error:  #20: identifier "DCDC3" is undefined
+main.c:                                                         axp_regu_enable(DCDC3); 
+main.c:                                                                         ^
+main.c(120): error:  #20: identifier "DCDC1" is undefined
+main.c:                                                         axp_set_voltage(DCDC1,1000);
+main.c:                                                                         ^
+main.c(133): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC2))
+main.c:                                                            ^
+main.c(135): error:  #20: identifier "temp2" is undefined
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                             ^
+main.c(135): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(143): error:  #20: identifier "DCDC1" is undefined
+main.c:                                                         if(staus_regu(DCDC1))
+main.c:                                                                       ^
+main.c(145): error:  #20: identifier "temp2" is undefined
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                     ^
+main.c(145): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(156): error:  #20: identifier "temp2" is undefined
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                         ^
+main.c(156): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(167): error:  #20: identifier "temp2" is undefined
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                         ^
+main.c(167): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(177): error:  #20: identifier "temp2" is undefined
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                       ^
+main.c(177): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(193): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                                         axp_write(0x04,j);
+main.c:                                                                         ^
+main.c(22): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c(23): warning:  #177-D: variable "E" was declared but never referenced
+main.c:         u8   E=0x00;
+main.c:              ^
+main.c: main.c: 11 warnings, 15 errors
+Target not created
+Build target 'Target 1'
+compiling main.c...
+main.c(53): error:  #20: identifier "LDO5" is undefined
+main.c:         axp_regu_enable(LDO5);                  
+main.c:                         ^
+main.c(81): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                          axp_write(0x04, j)   
+main.c:                                                          ^
+main.c(84): error:  #65: expected a ";"
+main.c:                                                         axp_regu_disable(LDO2);
+main.c:                                                         ^
+main.c(105): warning:  #223-D: function "axp_read" declared implicitly
+main.c:                                                         axp_read(0x04,&temp);
+main.c:                                                         ^
+main.c(114): error:  #20: identifier "DCDC3" is undefined
+main.c:                                                         axp_regu_enable(DCDC3); 
+main.c:                                                                         ^
+main.c(133): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC2))
+main.c:                                                            ^
+main.c(135): error:  #20: identifier "temp2" is undefined
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                             ^
+main.c(135): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(145): error:  #20: identifier "temp2" is undefined
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                     ^
+main.c(145): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(156): error:  #20: identifier "temp2" is undefined
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                         ^
+main.c(156): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(167): error:  #20: identifier "temp2" is undefined
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                         ^
+main.c(167): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(177): error:  #20: identifier "temp2" is undefined
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                       ^
+main.c(177): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(193): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                                         axp_write(0x04,j);
+main.c:                                                                         ^
+main.c(22): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c(23): warning:  #177-D: variable "E" was declared but never referenced
+main.c:         u8   E=0x00;
+main.c:              ^
+main.c: main.c: 11 warnings, 8 errors
+compiling axp_regu.c...
+Target not created
+compiling main.c...
+main.c(81): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                          axp_write(0x04, j)   
+main.c:                                                          ^
+main.c(84): error:  #65: expected a ";"
+main.c:                                                         axp_regu_disable(LDO2);
+main.c:                                                         ^
+main.c(105): warning:  #223-D: function "axp_read" declared implicitly
+main.c:                                                         axp_read(0x04,&temp);
+main.c:                                                         ^
+main.c(112): error:  #20: identifier "LDO5" is undefined
+main.c:                                                         axp_regu_enable(LDO5);                  
+main.c:                                                                         ^
+main.c(114): error:  #20: identifier "DCDC3" is undefined
+main.c:                                                         axp_regu_enable(DCDC3); 
+main.c:                                                                         ^
+main.c(133): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC2))
+main.c:                                                            ^
+main.c(135): error:  #20: identifier "temp2" is undefined
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                             ^
+main.c(135): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(145): error:  #20: identifier "temp2" is undefined
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                     ^
+main.c(145): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(156): error:  #20: identifier "temp2" is undefined
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                         ^
+main.c(156): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(167): error:  #20: identifier "temp2" is undefined
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                         ^
+main.c(167): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(177): error:  #20: identifier "temp2" is undefined
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                       ^
+main.c(177): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(193): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                                         axp_write(0x04,j);
+main.c:                                                                         ^
+main.c(22): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c(23): warning:  #177-D: variable "E" was declared but never referenced
+main.c:         u8   E=0x00;
+main.c:              ^
+main.c: main.c: 11 warnings, 8 errors
+main.c - 8 Error(s), 11 Warning(s).
+compiling main.c...
+main.c(85): error:  #65: expected a ";"
+main.c:                                                         axp_regu_disable(LDO2);
+main.c:                                                         ^
+main.c(113): error:  #20: identifier "LDO5" is undefined
+main.c:                                                         axp_regu_enable(LDO5);                  
+main.c:                                                                         ^
+main.c(115): error:  #20: identifier "DCDC3" is undefined
+main.c:                                                         axp_regu_enable(DCDC3); 
+main.c:                                                                         ^
+main.c(134): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC2))
+main.c:                                                            ^
+main.c(136): error:  #20: identifier "temp2" is undefined
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                             ^
+main.c(136): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(146): error:  #20: identifier "temp2" is undefined
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                     ^
+main.c(146): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(157): error:  #20: identifier "temp2" is undefined
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                         ^
+main.c(157): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(168): error:  #20: identifier "temp2" is undefined
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                         ^
+main.c(168): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(178): error:  #20: identifier "temp2" is undefined
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                       ^
+main.c(178): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c(24): warning:  #177-D: variable "E" was declared but never referenced
+main.c:         u8   E=0x00;
+main.c:              ^
+main.c: main.c: 8 warnings, 8 errors
+main.c - 8 Error(s), 8 Warning(s).
+compiling main.c...
+main.c(113): error:  #20: identifier "LDO5" is undefined
+main.c:                                                         axp_regu_enable(LDO5);                  
+main.c:                                                                         ^
+main.c(115): error:  #20: identifier "DCDC3" is undefined
+main.c:                                                         axp_regu_enable(DCDC3); 
+main.c:                                                                         ^
+main.c(134): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC2))
+main.c:                                                            ^
+main.c(136): error:  #20: identifier "temp2" is undefined
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                             ^
+main.c(136): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(146): error:  #20: identifier "temp2" is undefined
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                     ^
+main.c(146): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(157): error:  #20: identifier "temp2" is undefined
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                         ^
+main.c(157): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(168): error:  #20: identifier "temp2" is undefined
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                         ^
+main.c(168): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(178): error:  #20: identifier "temp2" is undefined
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                       ^
+main.c(178): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c(24): warning:  #177-D: variable "E" was declared but never referenced
+main.c:         u8   E=0x00;
+main.c:              ^
+main.c: main.c: 8 warnings, 7 errors
+main.c - 7 Error(s), 8 Warning(s).
+compiling main.c...
+main.c(133): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC2))
+main.c:                                                            ^
+main.c(135): error:  #20: identifier "temp2" is undefined
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                             ^
+main.c(135): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(145): error:  #20: identifier "temp2" is undefined
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                     ^
+main.c(145): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(156): error:  #20: identifier "temp2" is undefined
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                         ^
+main.c(156): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(167): error:  #20: identifier "temp2" is undefined
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                         ^
+main.c(167): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(177): error:  #20: identifier "temp2" is undefined
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                       ^
+main.c(177): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c(24): warning:  #177-D: variable "E" was declared but never referenced
+main.c:         u8   E=0x00;
+main.c:              ^
+main.c: main.c: 8 warnings, 5 errors
+main.c - 5 Error(s), 8 Warning(s).
+compiling main.c...
+main.c(135): error:  #20: identifier "temp2" is undefined
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                             ^
+main.c(135): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(143): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC1))
+main.c:                                                            ^
+main.c(145): error:  #20: identifier "temp2" is undefined
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                     ^
+main.c(145): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(156): error:  #20: identifier "temp2" is undefined
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                         ^
+main.c(156): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(167): error:  #20: identifier "temp2" is undefined
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                         ^
+main.c(167): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(177): error:  #20: identifier "temp2" is undefined
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                       ^
+main.c(177): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c(24): warning:  #177-D: variable "E" was declared but never referenced
+main.c:         u8   E=0x00;
+main.c:              ^
+main.c: main.c: 8 warnings, 5 errors
+main.c - 5 Error(s), 8 Warning(s).
+compiling main.c...
+main.c(136): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(144): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC1))
+main.c:                                                            ^
+main.c(146): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2=axp_get_voltage(DCDC1);
+main.c:                                           ^
+main.c(157): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(168): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(178): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c: main.c: 7 warnings, 0 errors
+main.c - 0 Error(s), 7 Warning(s).
+compiling main.c...
+main.c(136): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2=axp_get_voltage(DCDC2);
+main.c:                                                                   ^
+main.c(144): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC1))
+main.c:                                                            ^
+main.c(146): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2 = axp_get_voltage(DCDC1);
+main.c:                                             ^
+main.c(157): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(168): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(178): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c: main.c: 7 warnings, 0 errors
+main.c - 0 Error(s), 7 Warning(s).
+compiling main.c...
+main.c(136): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2 = axp_get_voltage(DCDC2);
+main.c:                                                                     ^
+main.c(144): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC1))
+main.c:                                                            ^
+main.c(146): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2 = axp_get_voltage(DCDC1);
+main.c:                                             ^
+main.c(157): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(168): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(178): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c: main.c: 7 warnings, 0 errors
+main.c - 0 Error(s), 7 Warning(s).
+compiling main.c...
+main.c(136): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2 = axp_get_voltage(DCDC2);
+main.c:                                                                     ^
+main.c(144): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC1))
+main.c:                                                            ^
+main.c(146): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2 = axp_get_voltage(DCDC1);
+main.c:                                             ^
+main.c(157): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(168): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(178): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c(23): warning:  #177-D: variable "datatemp" was declared but never referenced
+main.c:         u8   datatemp;
+main.c:              ^
+main.c: main.c: 7 warnings, 0 errors
+main.c - 0 Error(s), 7 Warning(s).
+compiling main.c...
+main.c(134): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2 = axp_get_voltage(DCDC2);
+main.c:                                                                     ^
+main.c(142): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(DCDC1))
+main.c:                                                            ^
+main.c(144): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2 = axp_get_voltage(DCDC1);
+main.c:                                             ^
+main.c(155): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(166): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(176): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c: main.c: 6 warnings, 0 errors
+main.c - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(134): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2 = axp_get_voltage(DCDC2);
+main.c:                                                                     ^
+main.c(142): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if( staus_regu(DCDC1))
+main.c:                                                             ^
+main.c(144): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2 = axp_get_voltage(DCDC1);
+main.c:                                             ^
+main.c(155): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(166): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(176): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c: main.c: 6 warnings, 0 errors
+linking...
+axp.axf: Error: L6200E: Symbol axp_write multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_read multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_writes multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_reads multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_set_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_clr_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_update multiply defined (by axp_regu.o and main.o).
+axp.axf: Not enough information to list image symbols.
+axp.axf: Not enough information to list the image map.
+axp.axf: Finished: 2 information, 0 warning and 7 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+main.c(131): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                             temp2 = axp_get_voltage(DCDC2);
+main.c:                                                                     ^
+main.c(139): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if( staus_regu(DCDC1))
+main.c:                                                             ^
+main.c(141): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                     temp2 = axp_get_voltage(DCDC1);
+main.c:                                             ^
+main.c(152): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                                         temp2=axp_get_voltage(LDO2);
+main.c:                                                               ^
+main.c(163): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                         temp2=axp_get_voltage(LDO3);
+main.c:                                               ^
+main.c(173): warning:  #223-D: function "axp_get_voltage" declared implicitly
+main.c:                                       temp2=axp_get_voltage(LDO4);
+main.c:                                             ^
+main.c: main.c: 6 warnings, 0 errors
+linking...
+axp.axf: Error: L6200E: Symbol axp_write multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_read multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_writes multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_reads multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_set_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_clr_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_update multiply defined (by axp_regu.o and main.o).
+axp.axf: Not enough information to list image symbols.
+axp.axf: Not enough information to list the image map.
+axp.axf: Finished: 2 information, 0 warning and 7 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+main.c(139): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if( staus_regu(DCDC1))
+main.c:                                                             ^
+main.c: main.c: 1 warning, 0 errors
+compiling axp_regu.c...
+linking...
+axp.axf: Error: L6200E: Symbol axp_write multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_read multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_writes multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_reads multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_set_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_clr_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_update multiply defined (by axp_regu.o and main.o).
+axp.axf: Not enough information to list image symbols.
+axp.axf: Not enough information to list the image map.
+axp.axf: Finished: 2 information, 0 warning and 7 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+main.c(150): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                         if(staus_regu(LDO2))
+main.c:                                                            ^
+main.c: main.c: 1 warning, 0 errors
+linking...
+axp.axf: Error: L6200E: Symbol axp_write multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_read multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_writes multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_reads multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_set_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_clr_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_update multiply defined (by axp_regu.o and main.o).
+axp.axf: Not enough information to list image symbols.
+axp.axf: Not enough information to list the image map.
+axp.axf: Finished: 2 information, 0 warning and 7 error messages.
+Target not created
+compiling main.c...
+main.c(161): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                                         if(staus_regu(LDO3))
+main.c:                                                                            ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(171): warning:  #223-D: function "staus_regu" declared implicitly
+main.c:                                                                         if(staus_regu(LDO4))
+main.c:                                                                            ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+axp.axf: Error: L6200E: Symbol axp_write multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_read multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_writes multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_reads multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_set_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_clr_bits multiply defined (by axp_regu.o and main.o).
+axp.axf: Error: L6200E: Symbol axp_update multiply defined (by axp_regu.o and main.o).
+axp.axf: Not enough information to list image symbols.
+axp.axf: Not enough information to list the image map.
+axp.axf: Finished: 2 information, 0 warning and 7 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+main.c(78): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                          axp_write(0x04, j)  ; 
+main.c:                                                          ^
+main.c(102): warning:  #223-D: function "axp_read" declared implicitly
+main.c:                                                         axp_read(0x04,&temp);
+main.c:                                                         ^
+main.c(189): warning:  #223-D: function "axp_write" declared implicitly
+main.c:                                                                         axp_write(0x04,j);
+main.c:                                                                         ^
+main.c: main.c: 3 warnings, 0 errors
+linking...
+Program Size: Code=19022 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 3 Warning(s).
+compiling main.c...
+main.c(101): warning:  #223-D: function "axp_read" declared implicitly
+main.c:                                                         axp_read(0x04,&temp);
+main.c:                                                         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=19022 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=19022 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=19022 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=19026 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling axp_regu.c...
+linking...
+Program Size: Code=19026 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=19026 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=19066 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=19062 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling axp_regu.c...
+..\axp192-173\axp_regu.c(114): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_LDO24OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                      ^
+..\axp192-173\axp_regu.c(120): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                               axp_read(POWER19_LDO24OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                              ^
+..\axp192-173\axp_regu.c(126): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                       axp_read(POWER19_DC3OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                    ^
+..\axp192-173\axp_regu.c(131): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC1OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                        ^
+..\axp192-173\axp_regu.c(137): error:  #167: argument of type "int *" is incompatible with parameter of type "u8 *"
+..\axp192-173\axp_regu.c:                           axp_read(POWER19_DC2OUT_VOL, &vol);
+..\axp192-173\axp_regu.c:                                                        ^
+..\axp192-173\axp_regu.c: ..\axp192-173\axp_regu.c: 0 warnings, 5 errors
+Target not created
+Build target 'Target 1'
+compiling axp_regu.c...
+linking...
+Program Size: Code=19010 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=19010 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=19010 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+Program Size: Code=19010 RO-data=2970 RW-data=60 ZI-data=1700  
+FromELF: creating hex file...
+"axp173.axf" - 0 Error(s), 0 Warning(s).
