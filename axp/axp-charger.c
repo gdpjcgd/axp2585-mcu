@@ -3,7 +3,6 @@
 #include "axp-core.h"
 #include "axp-charger.h"
 
-static int axp_power_key;
 static enum AW_CHARGE_TYPE axp_usbcurflag = CHARGE_AC;
 static enum AW_CHARGE_TYPE axp_usbvolflag = CHARGE_AC;
 
@@ -13,46 +12,24 @@ static struct axp_config_info *axp_config_obj;
 static int plug_debounce;
 
 
-void axp_powerkey_set(int value)
-{
-	spin_lock(&axp_powerkey_lock);
-	axp_power_key = value;
-	spin_unlock(&axp_powerkey_lock);
-}
-EXPORT_SYMBOL_GPL(axp_powerkey_set);
-
-int axp_powerkey_get(void)
-{
-	int value;
-
-	spin_lock(&axp_powerkey_lock);
-	value = axp_power_key;
-	spin_unlock(&axp_powerkey_lock);
-
-	return value;
-}
-EXPORT_SYMBOL_GPL(axp_powerkey_get);
 
 int axp_usbvol(enum AW_CHARGE_TYPE type)
 {
 	axp_usbvolflag = type;
 	return 0;
 }
-EXPORT_SYMBOL_GPL(axp_usbvol);
+
 
 int axp_usbcur(enum AW_CHARGE_TYPE type)
 {
 	axp_usbcurflag = type;
 	return 0;
 }
-EXPORT_SYMBOL_GPL(axp_usbcur);
 
-static inline void axp_read_adc(struct axp_charger_dev *chg_dev,
-		struct axp_adc_res *adc)
+
+static inline void axp_read_adc(struct axp_adc_res *adc)
 {
 	u8 tmp[2];
-	struct axp_regmap *map = chg_dev->chip->regmap;
-
 	axp_i2c_reads( chg_dev->spy_info->batt->bat_temp_offset,
 				2, tmp);
 	adc->ts_res = ((u16) tmp[0] << 8) | tmp[1];
@@ -181,14 +158,11 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 	struct axp_usb_info *usb = chg_dev->spy_info->usb;
 	struct axp_battery_info *batt = chg_dev->spy_info->batt;
 	struct axp_regmap *map = chg_dev->chip->regmap;
-#ifdef TYPE_C
-	struct axp_tc_info *tc = chg_dev->spy_info->tc;
-#endif
+
 	/*sleep 10ms for adapter stable*/
 	msleep(10);
 	axp_i2c_read( batt->det_offset, &val);
 	axp_i2c_read( batt->pwrsrc_offset, &pwrsrc);
-	mutex_lock(&chg_dev->charger_lock);
 	if (batt->det_unused == 0) {
 		if (batt->det_valid == 1) {
 			chg_dev->bat_det = pwrsrc_parse_bat_det(batt, pwrsrc);
@@ -200,12 +174,9 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 	} else if (batt->det_unused == 1) {
 		chg_dev->bat_det = 0;
 	}
-	mutex_unlock(&chg_dev->charger_lock);
 
 	axp_i2c_read( ac->det_offset, &val);
-	mutex_lock(&chg_dev->charger_lock);
 	chg_dev->ac_det = (val & 1 << ac->det_bit) ? 1 : 0;
-	mutex_unlock(&chg_dev->charger_lock);
 
 	if (usb->det_unused == 0) {
 		axp_i2c_read( usb->det_offset, &val);
@@ -217,15 +188,11 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 	}
 
 	axp_i2c_read( ac->valid_offset, &val);
-	mutex_lock(&chg_dev->charger_lock);
 	chg_dev->ac_valid = (val & 1 << ac->valid_bit) ? 1 : 0;
-	mutex_unlock(&chg_dev->charger_lock);
 
 	if (usb->det_unused == 0) {
 		axp_i2c_read( usb->valid_offset, &val);
-		mutex_lock(&chg_dev->charger_lock);
 		chg_dev->usb_valid = (val & 1 << usb->valid_bit) ? 1 : 0;
-		mutex_unlock(&chg_dev->charger_lock);
 	} else if (usb->det_unused == 1) {
 		chg_dev->usb_valid = 0;
 	}
@@ -261,25 +228,20 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 #endif
 	if (!chg_dev->in_short)
 		chg_dev->ac_charging = chg_dev->ac_valid;
-	mutex_unlock(&chg_dev->charger_lock);
 
 	axp_i2c_read( batt->cur_direction_offset, &val);
-	mutex_lock(&chg_dev->charger_lock);
 	if (val & 1 << batt->cur_direction_bit)
 		chg_dev->bat_current_direction = 1;
 	else
 		chg_dev->bat_current_direction = 0;
-	mutex_unlock(&chg_dev->charger_lock);
 
 	axp_i2c_read( batt->chgstat_offset, &val);
-	mutex_lock(&chg_dev->charger_lock);
 #ifdef AXP2585
 	chg_dev->charging = (((val & (7 << batt->chgstat_bit)) > 0) &&
 			     ((val & (7 << batt->chgstat_bit)) < 0x14)) ? 1 : 0;
 #else
 	chg_dev->charging = (val & 1 << batt->chgstat_bit) ? 1 : 0;
 #endif
-	mutex_unlock(&chg_dev->charger_lock);
 }
 
 
@@ -289,11 +251,7 @@ void axp_charger_update_value(struct axp_charger_dev *chg_dev)
 	struct axp_usb_info *usb = chg_dev->spy_info->usb;
 	struct axp_battery_info *batt = chg_dev->spy_info->batt;
 	int bat_vol, bat_cur, bat_discur, ac_vol, ac_cur, usb_vol, usb_cur;
-#ifdef TYPE_C
-/*	struct axp_tc_info *tc = chg_dev->spy_info->tc;
-	int tc_vol, tc_cur;
-*/
-#endif
+
 
 	bat_vol = batt->get_vbat(chg_dev);
 	bat_cur = batt->get_ibat(chg_dev);
@@ -302,10 +260,7 @@ void axp_charger_update_value(struct axp_charger_dev *chg_dev)
 	ac_cur  = ac->get_ac_current(chg_dev);
 	usb_vol = usb->get_usb_voltage(chg_dev);
 	usb_cur = usb->get_usb_current(chg_dev);
-#ifdef TYPE_C
-/*tc_vol  = tc->get_tc_voltage(chg_dev);
-tc_cur  = tc->get_tc_current(chg_dev);*/
-#endif
+
 
 	mutex_lock(&chg_dev->charger_lock);
 	chg_dev->bat_vol = bat_vol;
@@ -315,12 +270,7 @@ tc_cur  = tc->get_tc_current(chg_dev);*/
 	chg_dev->ac_cur  = ac_cur;
 	chg_dev->usb_vol = usb_vol;
 	chg_dev->usb_cur = usb_cur;
-#ifdef TYPE_C
-/*	chg_dev->tc_vol  = tc_vol;
-	chg_dev->tc_cur  = tc_cur;
-*/
-#endif
-	mutex_unlock(&chg_dev->charger_lock);
+
 }
 
 static void axp_usb_ac_check_status(struct axp_charger_dev *chg_dev)
@@ -339,8 +289,6 @@ static void axp_usb_ac_check_status(struct axp_charger_dev *chg_dev)
 	else
 		chg_dev->ac_charging = chg_dev->ac_valid;
 
-	power_supply_changed(chg_dev->ac);
-	power_supply_changed(chg_dev->usb);
 
 	AXP_DEBUG(AXP_CHG, chg_dev->chip->pmu_num,
 			"ac_charging=%d\n", chg_dev->ac_charging);
@@ -360,8 +308,7 @@ static void axp_charger_update_usb_state(unsigned long data)
 
 	axp_usb_ac_check_status(chg_dev);
 
-	if (chg_dev->bat_det)
-		schedule_delayed_work(&(chg_dev->usbwork), 0);
+
 }
 
 static void axp_usb(struct work_struct *work)
@@ -494,7 +441,6 @@ void axp_battery_update_vol(struct axp_charger_dev *chg_dev)
 
 	rest_vol = batt->get_rest_cap(chg_dev);
 
-	mutex_lock(&chg_dev->charger_lock);
 	if (rest_vol > 100) {
 		AXP_DEBUG(AXP_SPLY, chg_dev->chip->pmu_num,
 			"AXP rest_vol = %d\n", rest_vol);
@@ -502,7 +448,6 @@ void axp_battery_update_vol(struct axp_charger_dev *chg_dev)
 	} else {
 		chg_dev->rest_vol = rest_vol;
 	}
-	mutex_unlock(&chg_dev->charger_lock);
 
 	AXP_DEBUG(AXP_SPLY, chg_dev->chip->pmu_num,
 			"charger->rest_vol = %d\n", chg_dev->rest_vol);
@@ -662,42 +607,11 @@ static s32 axp_usb_get_property(struct power_supply *psy,
 	return ret;
 }
 
-#ifdef TYPE_C
-static s32 axp_tc_get_property(struct power_supply *psy,
-					enum power_supply_property psp,
-					union power_supply_propval *val)
-{
-	struct axp_charger_dev *chg_dev = power_supply_get_drvdata(psy);
-	s32 ret = 0;
-
-	switch (psp) {
-	case POWER_SUPPLY_PROP_MODEL_NAME:
-		val->strval = psy->desc->name;
-		break;
-	case POWER_SUPPLY_PROP_PRESENT:
-	case POWER_SUPPLY_PROP_ONLINE:
-		val->intval = chg_dev->tc_valid;
-		break;
-	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
-		val->intval = chg_dev->tc_vol * 1000;
-		break;
-	case POWER_SUPPLY_PROP_CURRENT_NOW:
-		val->intval = chg_dev->tc_cur * 1000;
-		break;
-	default:
-		ret = -EINVAL;
-		break;
-	}
-
-	return ret;
-}
-#endif
 
 
 static void axp_charging_monitor(struct work_struct *work)
 {
-	struct axp_charger_dev *chg_dev = container_of(work,
-					struct axp_charger_dev, work.work);
+
 	static s32 pre_rest_vol;
 	static bool pre_bat_curr_dir;
 
@@ -775,7 +689,7 @@ void axp_change(struct axp_charger_dev *chg_dev)
 	if (chg_dev->bat_det && battery_initialized)
 		power_supply_changed(chg_dev->batt);
 }
-EXPORT_SYMBOL_GPL(axp_change);
+
 
 void axp_usbac_in(struct axp_charger_dev *chg_dev)
 {
@@ -805,7 +719,7 @@ void axp_usbac_in(struct axp_charger_dev *chg_dev)
 				jiffies + msecs_to_jiffies(5000));
 	axp_usb_ac_check_status(chg_dev);
 }
-EXPORT_SYMBOL_GPL(axp_usbac_in);
+
 
 void axp_usbac_out(struct axp_charger_dev *chg_dev)
 {
@@ -823,7 +737,7 @@ void axp_usbac_out(struct axp_charger_dev *chg_dev)
 					jiffies + msecs_to_jiffies(2000));
 	axp_usb_ac_check_status(chg_dev);
 }
-EXPORT_SYMBOL_GPL(axp_usbac_out);
+
 
 void axp_capchange(struct axp_charger_dev *chg_dev)
 {
@@ -857,7 +771,6 @@ void axp_capchange(struct axp_charger_dev *chg_dev)
 		}
 	}
 }
-EXPORT_SYMBOL_GPL(axp_capchange);
 
 irqreturn_t axp_usb_in_isr(int irq, void *data)
 {
@@ -938,142 +851,99 @@ irqreturn_t axp_low_warning2_isr(int irq, void *data)
 
 }
 
-#ifdef TYPE_C
-irqreturn_t axp_tc_in_isr(int irq, void *data)
+
+int axp_charger_dt_parse(struct axp_config_info *axp_config)
 {
-	struct axp_charger_dev *chg_dev = data;
-
-	axp_change(chg_dev);
-	/*axp_usbac_in(chg_dev);*/
-
-	return IRQ_HANDLED;
-}
-
-irqreturn_t axp_tc_out_isr(int irq, void *data)
-{
-	struct axp_charger_dev *chg_dev = data;
-
-	axp_change(chg_dev);
-	/*axp_usbac_out(chg_dev);*/
-
-	return IRQ_HANDLED;
-}
-#endif
 
 
-void axp_charger_shutdown(struct axp_charger_dev *chg_dev)
-{
-	struct axp_battery_info *batt = chg_dev->spy_info->batt;
-	axp_charger_update_state(chg_dev);
-
-	if (chg_dev->bat_det) {
-		schedule_delayed_work(&chg_dev->usbwork, 0);
-		flush_delayed_work(&chg_dev->usbwork);
-		cancel_delayed_work_sync(&chg_dev->work);
-		cancel_delayed_work_sync(&chg_dev->usbwork);
-		batt->set_chg_cur(chg_dev, batt->shutdown_chgcur);
-
-	}
-}
-EXPORT_SYMBOL_GPL(axp_charger_shutdown);
-
-
-int axp_charger_dt_parse(struct device_node *node,
-			struct axp_config_info *axp_config)
-{
-	if (!of_device_is_available(node)) {
-		pr_err("%s: failed\n", __func__);
-		return -1;
-	}
-
-	AXP_OF_PROP_READ(pmu_battery_rdc,              BATRDC);
-	AXP_OF_PROP_READ(pmu_battery_cap,                4000);
-	AXP_OF_PROP_READ(pmu_batdeten,                      1);
-	AXP_OF_PROP_READ(pmu_chg_ic_temp,                   0);
-	AXP_OF_PROP_READ(pmu_runtime_chgcur, INTCHGCUR / 1000);
-	AXP_OF_PROP_READ(pmu_suspend_chgcur,             1200);
-	AXP_OF_PROP_READ(pmu_shutdown_chgcur,            1200);
-	AXP_OF_PROP_READ(pmu_init_chgvol,    INTCHGVOL / 1000);
-	AXP_OF_PROP_READ(pmu_init_chgend_rate,  INTCHGENDRATE);
-	AXP_OF_PROP_READ(pmu_init_chg_enabled,              1);
-	AXP_OF_PROP_READ(pmu_init_bc_en,                    0);
-	AXP_OF_PROP_READ(pmu_init_adc_freq,        INTADCFREQ);
-	AXP_OF_PROP_READ(pmu_init_adcts_freq,     INTADCFREQC);
-	AXP_OF_PROP_READ(pmu_init_chg_pretime,  INTCHGPRETIME);
-	AXP_OF_PROP_READ(pmu_init_chg_csttime,  INTCHGCSTTIME);
-	AXP_OF_PROP_READ(pmu_batt_cap_correct,              1);
-	AXP_OF_PROP_READ(pmu_chg_end_on_en,                 0);
-	AXP_OF_PROP_READ(ocv_coulumb_100,                   0);
-	AXP_OF_PROP_READ(pmu_bat_para1,               OCVREG0);
-	AXP_OF_PROP_READ(pmu_bat_para2,               OCVREG1);
-	AXP_OF_PROP_READ(pmu_bat_para3,               OCVREG2);
-	AXP_OF_PROP_READ(pmu_bat_para4,               OCVREG3);
-	AXP_OF_PROP_READ(pmu_bat_para5,               OCVREG4);
-	AXP_OF_PROP_READ(pmu_bat_para6,               OCVREG5);
-	AXP_OF_PROP_READ(pmu_bat_para7,               OCVREG6);
-	AXP_OF_PROP_READ(pmu_bat_para8,               OCVREG7);
-	AXP_OF_PROP_READ(pmu_bat_para9,               OCVREG8);
-	AXP_OF_PROP_READ(pmu_bat_para10,              OCVREG9);
-	AXP_OF_PROP_READ(pmu_bat_para11,              OCVREGA);
-	AXP_OF_PROP_READ(pmu_bat_para12,              OCVREGB);
-	AXP_OF_PROP_READ(pmu_bat_para13,              OCVREGC);
-	AXP_OF_PROP_READ(pmu_bat_para14,              OCVREGD);
-	AXP_OF_PROP_READ(pmu_bat_para15,              OCVREGE);
-	AXP_OF_PROP_READ(pmu_bat_para16,              OCVREGF);
-	AXP_OF_PROP_READ(pmu_bat_para17,             OCVREG10);
-	AXP_OF_PROP_READ(pmu_bat_para18,             OCVREG11);
-	AXP_OF_PROP_READ(pmu_bat_para19,             OCVREG12);
-	AXP_OF_PROP_READ(pmu_bat_para20,             OCVREG13);
-	AXP_OF_PROP_READ(pmu_bat_para21,             OCVREG14);
-	AXP_OF_PROP_READ(pmu_bat_para22,             OCVREG15);
-	AXP_OF_PROP_READ(pmu_bat_para23,             OCVREG16);
-	AXP_OF_PROP_READ(pmu_bat_para24,             OCVREG17);
-	AXP_OF_PROP_READ(pmu_bat_para25,             OCVREG18);
-	AXP_OF_PROP_READ(pmu_bat_para26,             OCVREG19);
-	AXP_OF_PROP_READ(pmu_bat_para27,             OCVREG1A);
-	AXP_OF_PROP_READ(pmu_bat_para28,             OCVREG1B);
-	AXP_OF_PROP_READ(pmu_bat_para29,             OCVREG1C);
-	AXP_OF_PROP_READ(pmu_bat_para30,             OCVREG1D);
-	AXP_OF_PROP_READ(pmu_bat_para31,             OCVREG1E);
-	AXP_OF_PROP_READ(pmu_bat_para32,             OCVREG1F);
-	AXP_OF_PROP_READ(pmu_ac_vol,                     4400);
-	AXP_OF_PROP_READ(pmu_usbpc_vol,                  4400);
-	AXP_OF_PROP_READ(pmu_ac_cur,                        0);
-	AXP_OF_PROP_READ(pmu_usbpc_cur,                     0);
-	AXP_OF_PROP_READ(pmu_pwroff_vol,                 3300);
-	AXP_OF_PROP_READ(pmu_pwron_vol,                  2900);
-	AXP_OF_PROP_READ(pmu_battery_warning_level1,       15);
-	AXP_OF_PROP_READ(pmu_battery_warning_level2,        0);
-	AXP_OF_PROP_READ(pmu_restvol_adjust_time,          30);
-	AXP_OF_PROP_READ(pmu_ocv_cou_adjust_time,          60);
-	AXP_OF_PROP_READ(pmu_chgled_func,                   0);
-	AXP_OF_PROP_READ(pmu_chgled_type,                   0);
-	AXP_OF_PROP_READ(pmu_bat_temp_enable,               0);
-	AXP_OF_PROP_READ(pmu_bat_charge_ltf,             0xA5);
-	AXP_OF_PROP_READ(pmu_bat_charge_htf,             0x1F);
-	AXP_OF_PROP_READ(pmu_bat_shutdown_ltf,           0xFC);
-	AXP_OF_PROP_READ(pmu_bat_shutdown_htf,           0x16);
-	AXP_OF_PROP_READ(pmu_bat_temp_para1,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para2,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para3,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para4,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para5,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para6,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para7,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para8,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para9,                0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para10,               0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para11,               0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para12,               0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para13,               0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para14,               0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para15,               0);
-	AXP_OF_PROP_READ(pmu_bat_temp_para16,               0);
-	AXP_OF_PROP_READ(pmu_bat_unused,                    0);
-	AXP_OF_PROP_READ(power_start,                       0);
-	AXP_OF_PROP_READ(pmu_ocv_en,                        1);
-	AXP_OF_PROP_READ(pmu_cou_en,                        1);
-	AXP_OF_PROP_READ(pmu_update_min_time,   UPDATEMINTIME);
+	axp_config->pmu_battery_rdc=       BATRDC;
+	axp_config->pmu_battery_cap=         4000;
+	axp_config->pmu_batdeten=               1;
+	axp_config->pmu_chg_ic_temp=            0;
+	axp_config->pmu_runtime_chgcur= INTCHGCUR / 1000;
+	axp_config->pmu_suspend_chgcur=      1200;
+	axp_config->pmu_shutdown_chgcur=     1200;
+	axp_config->pmu_init_chgvol,    INTCHGVOL / 1000;
+	axp_config->pmu_init_chgend_rate=  INTCHGENDRATE;
+	axp_config->pmu_init_chg_enabled=       1;
+	axp_config->pmu_init_bc_en=             0;
+	axp_config->pmu_init_adc_freq= INTADCFREQ;
+	axp_config->pmu_init_adcts_freq=     INTADCFREQC;
+	axp_config->pmu_init_chg_pretime=  INTCHGPRETIME;
+	axp_config->pmu_init_chg_csttime= INTCHGCSTTIME;
+	axp_config->pmu_batt_cap_correct=       1;
+	axp_config->pmu_chg_end_on_en=          0;
+	axp_config->ocv_coulumb_100=            0;
+	axp_config->pmu_bat_para1=        OCVREG0;
+	axp_config->pmu_bat_para2=        OCVREG1;
+	axp_config->pmu_bat_para3=        OCVREG2;
+	axp_config->pmu_bat_para4=        OCVREG3;
+	axp_config->pmu_bat_para5=        OCVREG4;
+	axp_config->pmu_bat_para6=        OCVREG5;
+	axp_config->pmu_bat_para7=        OCVREG6;
+	axp_config->pmu_bat_para8=        OCVREG7;
+	axp_config->pmu_bat_para9=        OCVREG8;
+	axp_config->pmu_bat_para10=       OCVREG9;
+	axp_config->pmu_bat_para11=       OCVREGA;
+	axp_config->pmu_bat_para12=       OCVREGB;
+	axp_config->pmu_bat_para13=       OCVREGC;
+	axp_config->pmu_bat_para14=       OCVREGD;
+	axp_config->pmu_bat_para15=       OCVREGE;
+	axp_config->pmu_bat_para16=       OCVREGF;
+	axp_config->pmu_bat_para17=      OCVREG10;
+	axp_config->pmu_bat_para18=      OCVREG11;
+	axp_config->pmu_bat_para19=      OCVREG12;
+	axp_config->pmu_bat_para20=      OCVREG13;
+	axp_config->pmu_bat_para21=      OCVREG14;
+	axp_config->pmu_bat_para22=      OCVREG15;
+	axp_config->pmu_bat_para23=      OCVREG16;
+	axp_config->pmu_bat_para24=      OCVREG17;
+	axp_config->pmu_bat_para25=      OCVREG18;
+	axp_config->pmu_bat_para26=      OCVREG19;
+	axp_config->pmu_bat_para27=      OCVREG1A;
+	axp_config->pmu_bat_para28=      OCVREG1B;
+	axp_config->pmu_bat_para29=      OCVREG1C;
+	axp_config->pmu_bat_para30=      OCVREG1D;
+	axp_config->pmu_bat_para31=      OCVREG1E;
+	axp_config->pmu_bat_para32=      OCVREG1F;
+	axp_config->pmu_ac_vol=              4400;
+	axp_config->pmu_usbpc_vol=           4400;
+	axp_config->pmu_ac_cur=                 0;
+	axp_config->pmu_usbpc_cur=              0;
+	axp_config->pmu_pwroff_vol=          3300;
+	axp_config->pmu_pwron_vol=           2900;
+	axp_config->pmu_battery_warning_level1=15;
+	axp_config->pmu_battery_warning_level2= 0;
+	axp_config->pmu_restvol_adjust_time=   30;
+	axp_config->pmu_ocv_cou_adjust_time=   60;
+	axp_config->pmu_chgled_func=            0;
+	axp_config->pmu_chgled_type=            0;
+	axp_config->pmu_bat_temp_enable=        0;
+	axp_config->pmu_bat_charge_ltf=      0xA5;
+	axp_config->pmu_bat_charge_htf=      0x1F;
+	axp_config->pmu_bat_shutdown_ltf=    0xFC;
+	axp_config->pmu_bat_shutdown_htf=    0x16;
+	axp_config->pmu_bat_temp_para1=         0;
+	axp_config->pmu_bat_temp_para2=         0;
+	axp_config->pmu_bat_temp_para3=         0;
+	axp_config->pmu_bat_temp_para4=         0;
+	axp_config->pmu_bat_temp_para5=         0;
+	axp_config->pmu_bat_temp_para6=         0;
+	axp_config->pmu_bat_temp_para7=         0;
+	axp_config->pmu_bat_temp_para8=         0;
+	axp_config->pmu_bat_temp_para9=         0;
+	axp_config->pmu_bat_temp_para10=        0;
+	axp_config->pmu_bat_temp_para11=        0;
+	axp_config->pmu_bat_temp_para12=        0;
+	axp_config->pmu_bat_temp_para13=        0;
+	axp_config->pmu_bat_temp_para14=        0;
+	axp_config->pmu_bat_temp_para15=        0;
+	axp_config->pmu_bat_temp_para16=        0;
+	axp_config->pmu_bat_unused=             0;
+	axp_config->power_start=                0;
+	axp_config->pmu_ocv_en=                 1;
+	axp_config->pmu_cou_en=                 1;
+	axp_config->pmu_update_min_time=   UPDATEMINTIME;
 
 	axp_config_obj = axp_config;
 	return 0;
