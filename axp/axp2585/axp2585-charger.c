@@ -53,20 +53,6 @@ static int axp2585_get_usb_ihold()
 	axp_i2c_read(0x10, &tmp);
 	return (tmp*50 + 100);
 }
-#if 0
-static struct axp_usb_info axp2585_usb_info = {
-	.det_bit         = 1,
-	.det_offset      = 0,
-	.valid_offset	 = 0,
-	.valid_bit	 = 1,
-	.get_usb_voltage = axp2585_get_usb_voltage,
-	.get_usb_current = axp2585_get_usb_current,
-	.set_usb_vhold   = axp2585_set_usb_vhold,
-	.get_usb_vhold   = axp2585_get_usb_vhold,
-	.set_usb_ihold   = axp2585_set_usb_ihold,
-	.get_usb_ihold   = axp2585_get_usb_ihold,
-};
-#endif
 
 static int axp2585_get_rest_cap()
 {
@@ -83,14 +69,12 @@ static int axp2585_get_rest_cap()
 	axp_i2c_read( 0xe4, &tmp[0]);
 	if (tmp[0] & 0x80) {
 		ocv_percent = tmp[0] & 0x7f;
-		AXP_DEBUG(AXP_SPLY, cdev->chip->pmu_num,
-			"ocv_percent = %d\n", ocv_percent);
+		printf("ocv_percent = %d\n", ocv_percent);
 	}
 	axp_i2c_read(0xe5, &tmp[0]);
 	if (tmp[0] & 0x80) {
 		coulomb_percent = tmp[0] & 0x7f;
-		AXP_DEBUG(AXP_SPLY, cdev->chip->pmu_num,
-			"coulomb_percent = %d\n", coulomb_percent);
+		printf("coulomb_percent = %d\n", coulomb_percent);
 	}
 	if (ocv_percent == 100 && cdev->charging == 0 && rest_vol == 99
 		&& (cdev->ac_valid == 1 || cdev->usb_valid == 1)) {
@@ -190,26 +174,6 @@ static int axp2585_set_chg_vol(int vol)
 	axp_i2c_update(0x8c, tmp << 2, 0xfc);
 	return 0;
 }
-
-static struct axp_battery_info axp2585_batt_info = {
-	.chgstat_bit          = 2,			//2--4
-	.chgstat_offset       = 0,
-	.det_bit              = 4,
-	.det_offset           = 2,
-	.det_valid_bit        = 3,
-	.det_valid            = 1,
-	.cur_direction_bit    = 0,
-	.cur_direction_offset = 2,
-	.get_rest_cap         = axp2585_get_rest_cap,
-	.get_bat_health       = axp2585_get_bat_health,
-	.get_vbat             = axp2585_get_vbat,
-	.get_ibat             = axp2585_get_ibat,
-	.get_disibat          = axp2585_get_disibat,
-	.set_chg_cur          = axp2585_set_chg_cur,
-	.set_chg_vol          = axp2585_set_chg_vol,
-};
-
-
 
 static int axp2585_charger_init(struct axp_dev *axp_dev)
 {
@@ -349,8 +313,16 @@ static int axp2585_charger_init(struct axp_dev *axp_dev)
 	axp_i2c_read(AXP2585_RDC0, &val);
 	if ((axp2585_config.pmu_battery_rdc) && (!(val & 0x40))) {
 		rdc = (axp2585_config.pmu_battery_rdc * 10000 + 5371) / 10742;
-		axp_i2c_write(AXP2585_RDC0, ((rdc >> 8) & 0x1F)|0x80);
-		axp_i2c_write(AXP2585_RDC1, rdc & 0x00FF);
+		u8 rdc_reg[2];
+		u16 rdc_reg_val;
+		axp_i2c_reads(AXP2585_RDC0,2,rdc_reg);
+		rdc_reg_val=(rdc_reg[0]<<8)|rdc_reg[1];
+		rdc_reg_val=(rdc_reg_val&0xe0)|rdc;
+		rdc_reg[1]=(rdc_reg_val&0xff00)>>8;
+		rdc_reg[0]=rdc_reg_val&0xff;
+		//axp_i2c_write(AXP2585_RDC0, ((rdc >> 8) & 0x1F)|0x80);
+		//axp_i2c_write(AXP2585_RDC1, rdc & 0x00FF);
+		axp_i2c_writes(AXP2585_RDC0,2,rdc_reg);
 	}
 
 	axp_i2c_read(AXP2585_BATCAP0, &val);

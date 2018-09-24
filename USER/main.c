@@ -22,7 +22,7 @@ extern void axp_write(int reg, u8 val);
 extern void axp_read( int reg, u8 *val);
 
 //
-struct axp_charger charger_173 ,*charger;
+struct axp_charger charger_2585 ,*charger;
 
 
  int main(void){
@@ -35,7 +35,7 @@ struct axp_charger charger_173 ,*charger;
 	int rdc;
 	uint8_t val[2];
 
-	charger=&charger_173;		
+	charger=&charger_2585;
 				 
 	SystemInit();
 	delay_init(72);	     //—” ±≥ı ºªØ

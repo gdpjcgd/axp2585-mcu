@@ -13,9 +13,6 @@
 
 #ifndef AXP_CORE_H_
 #define AXP_CORE_H_
-#include <linux/interrupt.h>
-//#include <linux/power/aw_pm.h>
-
 
 #include "axp-charger.h"
 

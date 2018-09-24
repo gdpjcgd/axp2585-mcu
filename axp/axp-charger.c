@@ -1,30 +1,5 @@
-/*
- * drivers/power/axp/axp-charger.c
- * (C) Copyright 2010-2016
- * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
- * Pannan <pannan@allwinnertech.com>
- *
- * axp charger APIs
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as
- * published by the Free Software Foundation; either version 2 of
- * the License, or (at your option) any later version.
- *
- */
 
-#include <linux/kernel.h>
-#include <linux/init.h>
-#include <linux/delay.h>
-#include <linux/device.h>
-#include <linux/module.h>
-#include <linux/platform_device.h>
-#include <linux/workqueue.h>
-#include <linux/types.h>
-#include <linux/slab.h>
-#include <linux/power_supply.h>
-#include <linux/of_device.h>
-#include <linux/interrupt.h>
+
 #include "axp-core.h"
 #include "axp-charger.h"
 
@@ -36,7 +11,7 @@ static struct axp_adc_res adc;
 static bool battery_initialized;
 static struct axp_config_info *axp_config_obj;
 static int plug_debounce;
-static DEFINE_SPINLOCK(axp_powerkey_lock);
+
 
 void axp_powerkey_set(int value)
 {
@@ -78,7 +53,7 @@ static inline void axp_read_adc(struct axp_charger_dev *chg_dev,
 	u8 tmp[2];
 	struct axp_regmap *map = chg_dev->chip->regmap;
 
-	axp_regmap_reads(map, chg_dev->spy_info->batt->bat_temp_offset,
+	axp_i2c_reads( chg_dev->spy_info->batt->bat_temp_offset,
 				2, tmp);
 	adc->ts_res = ((u16) tmp[0] << 8) | tmp[1];
 }
@@ -153,7 +128,7 @@ static inline void axp_update_ictemp_status(struct axp_charger_dev *chg_dev)
 	u8 temp_val[2];
 	struct axp_regmap *map = chg_dev->chip->regmap;
 
-	axp_regmap_reads(map, chg_dev->pmic_temp_offset, 2, temp_val);
+	axp_i2c_reads( chg_dev->pmic_temp_offset, 2, temp_val);
 	tmp = (temp_val[0] << 4) + (temp_val[1] & 0x0F);
 	chg_dev->ic_temp = (s32) tmp * 1063 / 10000  - 2667 / 10;
 
@@ -169,7 +144,7 @@ static inline void axp_update_temp_status(struct axp_charger_dev *chg_dev)
 	chg_dev->adc = &adc;
 	axp_read_adc(chg_dev, &adc);
 
-	axp_regmap_reads(map, chg_dev->pmic_temp_offset, 2, temp_val);
+	axp_i2c_reads( chg_dev->pmic_temp_offset, 2, temp_val);
 	tmp = (temp_val[0] << 4) + (temp_val[1] & 0x0F);
 	chg_dev->ic_temp = (s32) tmp * 1063 / 10000  - 2667 / 10;
 
@@ -211,8 +186,8 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 #endif
 	/*sleep 10ms for adapter stable*/
 	msleep(10);
-	axp_regmap_read(map, batt->det_offset, &val);
-	axp_regmap_read(map, batt->pwrsrc_offset, &pwrsrc);
+	axp_i2c_read( batt->det_offset, &val);
+	axp_i2c_read( batt->pwrsrc_offset, &pwrsrc);
 	mutex_lock(&chg_dev->charger_lock);
 	if (batt->det_unused == 0) {
 		if (batt->det_valid == 1) {
@@ -227,13 +202,13 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 	}
 	mutex_unlock(&chg_dev->charger_lock);
 
-	axp_regmap_read(map, ac->det_offset, &val);
+	axp_i2c_read( ac->det_offset, &val);
 	mutex_lock(&chg_dev->charger_lock);
 	chg_dev->ac_det = (val & 1 << ac->det_bit) ? 1 : 0;
 	mutex_unlock(&chg_dev->charger_lock);
 
 	if (usb->det_unused == 0) {
-		axp_regmap_read(map, usb->det_offset, &val);
+		axp_i2c_read( usb->det_offset, &val);
 		mutex_lock(&chg_dev->charger_lock);
 		chg_dev->usb_det = (val & 1 << usb->det_bit) ? 1 : 0;
 		mutex_unlock(&chg_dev->charger_lock);
@@ -241,13 +216,13 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 		chg_dev->usb_det = 0;
 	}
 
-	axp_regmap_read(map, ac->valid_offset, &val);
+	axp_i2c_read( ac->valid_offset, &val);
 	mutex_lock(&chg_dev->charger_lock);
 	chg_dev->ac_valid = (val & 1 << ac->valid_bit) ? 1 : 0;
 	mutex_unlock(&chg_dev->charger_lock);
 
 	if (usb->det_unused == 0) {
-		axp_regmap_read(map, usb->valid_offset, &val);
+		axp_i2c_read( usb->valid_offset, &val);
 		mutex_lock(&chg_dev->charger_lock);
 		chg_dev->usb_valid = (val & 1 << usb->valid_bit) ? 1 : 0;
 		mutex_unlock(&chg_dev->charger_lock);
@@ -256,7 +231,7 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 	}
 #ifdef TYPE_C
 	if (tc->det_unused == 0) {
-		axp_regmap_read(map, tc->det_offset, &val);
+		axp_i2c_read( tc->det_offset, &val);
 		mutex_lock(&chg_dev->charger_lock);
 		chg_dev->tc_det = (val & 1 << tc->det_bit) ? 1 : 0;
 		mutex_unlock(&chg_dev->charger_lock);
@@ -264,7 +239,7 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 		chg_dev->tc_det = 0;
 	}
 	if (tc->det_unused == 0) {
-		axp_regmap_read(map, tc->valid_offset, &val);
+		axp_i2c_read( tc->valid_offset, &val);
 		mutex_lock(&chg_dev->charger_lock);
 		chg_dev->tc_valid = (val & 1 << tc->valid_bit) ? 1 : 0;
 		mutex_unlock(&chg_dev->charger_lock);
@@ -277,7 +252,7 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 	chg_dev->ext_valid = (chg_dev->ac_det || chg_dev->usb_det);
 #endif
 
-	axp_regmap_read(map, ac->in_short_offset, &val);
+	axp_i2c_read( ac->in_short_offset, &val);
 	mutex_lock(&chg_dev->charger_lock);
 #ifdef AXP2585
 	chg_dev->in_short = (val & 1 << ac->in_short_bit) ? 1 : 0;
@@ -288,7 +263,7 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 		chg_dev->ac_charging = chg_dev->ac_valid;
 	mutex_unlock(&chg_dev->charger_lock);
 
-	axp_regmap_read(map, batt->cur_direction_offset, &val);
+	axp_i2c_read( batt->cur_direction_offset, &val);
 	mutex_lock(&chg_dev->charger_lock);
 	if (val & 1 << batt->cur_direction_bit)
 		chg_dev->bat_current_direction = 1;
@@ -296,7 +271,7 @@ void axp_charger_update_state(struct axp_charger_dev *chg_dev)
 		chg_dev->bat_current_direction = 0;
 	mutex_unlock(&chg_dev->charger_lock);
 
-	axp_regmap_read(map, batt->chgstat_offset, &val);
+	axp_i2c_read( batt->chgstat_offset, &val);
 	mutex_lock(&chg_dev->charger_lock);
 #ifdef AXP2585
 	chg_dev->charging = (((val & (7 << batt->chgstat_bit)) > 0) &&
@@ -533,48 +508,6 @@ void axp_battery_update_vol(struct axp_charger_dev *chg_dev)
 			"charger->rest_vol = %d\n", chg_dev->rest_vol);
 }
 
-static enum power_supply_property axp_battery_props[] = {
-	POWER_SUPPLY_PROP_MODEL_NAME,
-	POWER_SUPPLY_PROP_STATUS,
-	POWER_SUPPLY_PROP_PRESENT,
-	POWER_SUPPLY_PROP_ONLINE,
-	POWER_SUPPLY_PROP_HEALTH,
-	POWER_SUPPLY_PROP_TECHNOLOGY,
-	POWER_SUPPLY_PROP_CHARGE_COUNTER,
-	POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
-	POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN,
-	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-	POWER_SUPPLY_PROP_CURRENT_NOW,
-	POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN,
-	POWER_SUPPLY_PROP_CAPACITY,
-	POWER_SUPPLY_PROP_TEMP,
-};
-
-static enum power_supply_property axp_ac_props[] = {
-	POWER_SUPPLY_PROP_MODEL_NAME,
-	POWER_SUPPLY_PROP_PRESENT,
-	POWER_SUPPLY_PROP_ONLINE,
-	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-	POWER_SUPPLY_PROP_CURRENT_NOW,
-};
-
-static enum power_supply_property axp_usb_props[] = {
-	POWER_SUPPLY_PROP_MODEL_NAME,
-	POWER_SUPPLY_PROP_PRESENT,
-	POWER_SUPPLY_PROP_ONLINE,
-	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-	POWER_SUPPLY_PROP_CURRENT_NOW,
-};
-
-#ifdef TYPE_C
-static enum power_supply_property axp_tc_props[] = {
-	POWER_SUPPLY_PROP_MODEL_NAME,
-	POWER_SUPPLY_PROP_PRESENT,
-	POWER_SUPPLY_PROP_ONLINE,
-	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-	POWER_SUPPLY_PROP_CURRENT_NOW,
-};
-#endif
 
 static void axp_battery_check_status(struct axp_charger_dev *chg_dev,
 					union power_supply_propval *val)
@@ -760,53 +693,11 @@ static s32 axp_tc_get_property(struct power_supply *psy,
 }
 #endif
 
-static char *supply_list[] = {
-	"battery",
-};
-static const struct power_supply_desc batt_desc = {
-	.name = "battery",
-	.type = POWER_SUPPLY_TYPE_BATTERY,
-	.get_property = axp_battery_get_property,
-	.properties = axp_battery_props,
-	.num_properties = ARRAY_SIZE(axp_battery_props),
-	.use_for_apm = 1,
-};
-
-static const struct power_supply_desc ac_desc = {
-	.name = "ac",
-	.type = POWER_SUPPLY_TYPE_MAINS,
-	.get_property = axp_ac_get_property,
-	.properties = axp_ac_props,
-	.num_properties = ARRAY_SIZE(axp_ac_props),
-};
-
-static const struct power_supply_desc usb_desc = {
-	.name = "usb",
-	.type = POWER_SUPPLY_TYPE_USB,
-	.get_property = axp_usb_get_property,
-	.properties = axp_usb_props,
-	.num_properties = ARRAY_SIZE(axp_usb_props),
-};
-
-#ifdef TYPE_C
-static const struct power_supply_desc tc_desc = {
-	.name = "tc",
-	.type = POWER_SUPPLY_TYPE_USB_TYPE_C,
-	.get_property = axp_tc_get_property,
-	.properties = axp_tc_props,
-	.num_properties = ARRAY_SIZE(axp_tc_props),
-};
-#endif
-static struct power_supply_config psy_cfg = {
-	.supplied_to = supply_list,
-	.num_supplicants = ARRAY_SIZE(supply_list),
-};
 
 static void axp_charging_monitor(struct work_struct *work)
 {
 	struct axp_charger_dev *chg_dev = container_of(work,
 					struct axp_charger_dev, work.work);
-	struct power_supply_config psy_cfg = {};
 	static s32 pre_rest_vol;
 	static bool pre_bat_curr_dir;
 
@@ -1068,44 +959,7 @@ irqreturn_t axp_tc_out_isr(int irq, void *data)
 	return IRQ_HANDLED;
 }
 #endif
-void axp_charger_suspend(struct axp_charger_dev *chg_dev)
-{
-	struct axp_battery_info *batt = chg_dev->spy_info->batt;
 
-	axp_charger_update_state(chg_dev);
-
-	if (chg_dev->bat_det) {
-		schedule_delayed_work(&chg_dev->usbwork, 0);
-		flush_delayed_work(&chg_dev->usbwork);
-		cancel_delayed_work_sync(&chg_dev->work);
-		cancel_delayed_work_sync(&chg_dev->usbwork);
-
-		batt->set_chg_cur(chg_dev, batt->suspend_chgcur);
-	}
-}
-EXPORT_SYMBOL_GPL(axp_charger_suspend);
-
-void axp_charger_resume(struct axp_charger_dev *chg_dev)
-{
-	struct axp_battery_info *batt = chg_dev->spy_info->batt;
-
-	axp_charger_update_state(chg_dev);
-	axp_charger_update_value(chg_dev);
-	axp_battery_update_vol(chg_dev);
-
-	batt->set_chg_cur(chg_dev, batt->runtime_chgcur);
-
-	power_supply_changed(chg_dev->ac);
-	power_supply_changed(chg_dev->usb);
-
-	if (chg_dev->bat_det) {
-		power_supply_changed(chg_dev->batt);
-		schedule_delayed_work(&chg_dev->work, chg_dev->interval);
-		schedule_delayed_work(&chg_dev->usbwork,
-					msecs_to_jiffies(7 * 1000));
-	}
-}
-EXPORT_SYMBOL_GPL(axp_charger_resume);
 
 void axp_charger_shutdown(struct axp_charger_dev *chg_dev)
 {
@@ -1123,119 +977,6 @@ void axp_charger_shutdown(struct axp_charger_dev *chg_dev)
 }
 EXPORT_SYMBOL_GPL(axp_charger_shutdown);
 
-struct axp_charger_dev *axp_power_supply_register(struct device *dev,
-					struct axp_dev *axp_dev,
-					struct power_supply_info *battery_info,
-					struct axp_supply_info *info)
-{
-	struct axp_charger_dev *chg_dev;
-
-	chg_dev = devm_kzalloc(dev, sizeof(*chg_dev), GFP_KERNEL);
-	if (chg_dev == NULL)
-		return NULL;
-
-	chg_dev->dev = dev;
-	chg_dev->spy_info = info;
-	chg_dev->chip = axp_dev;
-	chg_dev->battery_info = battery_info;
-	psy_cfg.drv_data = chg_dev;
-
-	mutex_init(&chg_dev->charger_lock);
-
-	axp_charger_update_state(chg_dev);
-	if (chg_dev->bat_det) {
-		chg_dev->batt = power_supply_register(dev,
-				&batt_desc, &psy_cfg);
-		if (IS_ERR(chg_dev->batt))
-			goto err_ps_register;
-		battery_initialized = true;
-	}
-
-	chg_dev->ac = power_supply_register(dev, &ac_desc, &psy_cfg);
-	if (IS_ERR(chg_dev->ac)) {
-		if (chg_dev->bat_det) {
-			power_supply_unregister(chg_dev->batt);
-			chg_dev->batt = NULL;
-			goto err_ps_register;
-		}
-	}
-
-	chg_dev->usb = power_supply_register(dev, &usb_desc, &psy_cfg);
-	if (IS_ERR(chg_dev->usb)) {
-		power_supply_unregister(chg_dev->ac);
-		chg_dev->ac = NULL;
-		if (chg_dev->bat_det) {
-			power_supply_unregister(chg_dev->batt);
-			chg_dev->batt = NULL;
-			goto err_ps_register;
-		}
-	}
-#ifdef TYPE_C
-	chg_dev->tc = power_supply_register(dev, &tc_desc, &psy_cfg);
-	if (IS_ERR(chg_dev->tc)) {
-		power_supply_unregister(chg_dev->ac);
-		power_supply_unregister(chg_dev->usb);
-		chg_dev->ac = NULL;
-		chg_dev->usb = NULL;
-		if (chg_dev->bat_det) {
-			power_supply_unregister(chg_dev->batt);
-			chg_dev->batt = NULL;
-			goto err_ps_register;
-		}
-	}
-	if (info->tc->tc_vol && info->tc->set_tc_vhold)
-		info->tc->set_tc_vhold(chg_dev, info->tc->tc_vol);
-#endif
-
-	if (info->ac->ac_vol && info->ac->set_ac_vhold)
-		info->ac->set_ac_vhold(chg_dev, info->ac->ac_vol);
-
-	if (info->usb->usb_pc_vol && info->usb->set_usb_vhold)
-		info->usb->set_usb_vhold(chg_dev, info->usb->usb_pc_vol);
-
-	if (info->batt->runtime_chgcur && info->batt->set_chg_cur)
-		info->batt->set_chg_cur(chg_dev, info->batt->runtime_chgcur);
-
-	setup_timer(&chg_dev->usb_status_timer,
-			axp_charger_update_usb_state, (unsigned long)chg_dev);
-	INIT_DELAYED_WORK(&(chg_dev->usbwork), axp_usb);
-
-	axp_usb_ac_check_status(chg_dev);
-	axp_battery_update_vol(chg_dev);
-
-	chg_dev->interval = msecs_to_jiffies(10 * 1000);
-	INIT_DELAYED_WORK(&chg_dev->work, axp_charging_monitor);
-
-	schedule_delayed_work(&chg_dev->work, chg_dev->interval);
-	if (timer_pending(&chg_dev->usb_status_timer))
-		del_timer_sync(&chg_dev->usb_status_timer);
-	mod_timer(&chg_dev->usb_status_timer,
-		jiffies + msecs_to_jiffies(20 * 1000));
-
-	return chg_dev;
-
-err_ps_register:
-	return NULL;
-}
-EXPORT_SYMBOL_GPL(axp_power_supply_register);
-
-void axp_power_supply_unregister(struct axp_charger_dev *chg_dev)
-{
-	del_timer_sync(&chg_dev->usb_status_timer);
-	power_supply_unregister(chg_dev->usb);
-	chg_dev->batt = NULL;
-	power_supply_unregister(chg_dev->ac);
-	chg_dev->ac = NULL;
-
-	if (chg_dev->bat_det && battery_initialized) {
-		cancel_delayed_work_sync(&chg_dev->work);
-		cancel_delayed_work_sync(&chg_dev->usbwork);
-		power_supply_unregister(chg_dev->batt);
-		chg_dev->batt = NULL;
-		battery_initialized = false;
-	}
-}
-EXPORT_SYMBOL_GPL(axp_power_supply_unregister);
 
 int axp_charger_dt_parse(struct device_node *node,
 			struct axp_config_info *axp_config)
@@ -1337,8 +1078,4 @@ int axp_charger_dt_parse(struct device_node *node,
 	axp_config_obj = axp_config;
 	return 0;
 }
-EXPORT_SYMBOL_GPL(axp_charger_dt_parse);
 
-MODULE_DESCRIPTION("ALLWINNERTECH axp charger");
-MODULE_AUTHOR("pannan");
-MODULE_LICENSE("GPL");
