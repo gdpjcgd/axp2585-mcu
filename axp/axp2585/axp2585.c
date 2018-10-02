@@ -5,7 +5,6 @@
 
 static struct axp_dev *axp2585_pm_power;
 struct axp_config_info axp2585_config;
-struct wakeup_source *axp2585_ws;
 static int axp2585_pmu_num;
 
 void axp2585_power_off(void)

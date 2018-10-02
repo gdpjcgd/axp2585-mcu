@@ -76,13 +76,7 @@ static int axp2585_get_rest_cap()
 		coulomb_percent = tmp[0] & 0x7f;
 		printf("coulomb_percent = %d\n", coulomb_percent);
 	}
-	if (ocv_percent == 100 && cdev->charging == 0 && rest_vol == 99
-		&& (cdev->ac_valid == 1 || cdev->usb_valid == 1)) {
-		axp_i2c_clr_bits( AXP2585_COULOMB_CTL, 0x80);
-		axp_i2c_set_bits( AXP2585_COULOMB_CTL, 0x80);
-		AXP_DEBUG(AXP_SPLY, cdev->chip->pmu_num, "Reset coulumb\n");
-		rest_vol = 100;
-	}
+
 	axp_i2c_reads(0xe2, 2, temp_val);
 	coulumb_counter = (((temp_val[0] & 0x7f) << 8) + temp_val[1])
 						* 1456 / 1000;
@@ -91,8 +85,7 @@ static int axp2585_get_rest_cap()
 	batt_max_cap = (((temp_val[0] & 0x7f) << 8) + temp_val[1])
 						* 1456 / 1000;
 
-	AXP_DEBUG(AXP_SPLY, cdev->chip->pmu_num,
-			"batt_max_cap = %d\n", batt_max_cap);
+	printg("batt_max_cap = %d\n", batt_max_cap);
 	return rest_vol;
 }
 
@@ -105,7 +98,6 @@ static int axp2585_get_vbat(struct axp_charger_dev *cdev)
 {
 	u8 tmp[2];
 	u32 res;
-	struct axp_regmap *map = cdev->chip->regmap;
 
 	axp_i2c_reads(AXP2585_VBATH_RES, 2, tmp);
 	res = (tmp[0] << 8) | tmp[1];
@@ -175,7 +167,7 @@ static int axp2585_set_chg_vol(int vol)
 	return 0;
 }
 
-static int axp2585_charger_init(struct axp_dev *axp_dev)
+static int axp2585_charger_init()
 {
 	u8 ocv_cap[32];
 	u8 val = 0;
@@ -372,41 +364,6 @@ static int axp2585_charger_init(struct axp_dev *axp_dev)
 	axp_i2c_update( AXP2585_ADJUST_PARA1, i, 0xC0);
 	return 0;
 }
-
-
-
-static int axp2585_charger_probe(struct platform_device *pdev)
-{
-	int ret, i, irq;
-	struct axp_charger_dev *chg_dev;
-	struct axp_dev *axp_dev = dev_get_drvdata(pdev->dev.parent);
-
-
-	axp2585_ac_info.ac_vol = axp2585_config.pmu_ac_vol;
-	axp2585_ac_info.ac_cur = axp2585_config.pmu_ac_cur;
-	axp2585_usb_info.usb_pc_vol = axp2585_config.pmu_usbpc_vol;
-	axp2585_usb_info.usb_pc_cur = axp2585_config.pmu_usbpc_cur;
-	axp2585_usb_info.usb_ad_vol = axp2585_config.pmu_ac_vol;
-	axp2585_usb_info.usb_ad_cur = axp2585_config.pmu_ac_cur;
-	axp2585_batt_info.runtime_chgcur = axp2585_config.pmu_runtime_chgcur;
-	axp2585_batt_info.suspend_chgcur = axp2585_config.pmu_suspend_chgcur;
-	axp2585_batt_info.shutdown_chgcur = axp2585_config.pmu_shutdown_chgcur;
-	battery_data.voltage_max_design = axp2585_config.pmu_init_chgvol
-								* 1000;
-	battery_data.voltage_min_design = axp2585_config.pmu_pwroff_vol
-								* 1000;
-	battery_data.energy_full_design = axp2585_config.pmu_battery_cap;
-
-	axp2585_charger_init(axp_dev);
-	chg_dev->pmic_temp_offset = 0x56;
-	chg_dev->spy_info->batt->bat_temp_offset = 0x58;
-
-	return 0;
-
-}
-
-
-
 
 
 

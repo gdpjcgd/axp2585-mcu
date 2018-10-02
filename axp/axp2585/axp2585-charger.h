@@ -42,11 +42,6 @@
 #define AXP2585_COULOMB_CTL              (0xB8)
 #define AXP2585_ADJUST_PARA              (0xE8)
 #define AXP2585_ADJUST_PARA1             (0xE9)
-#define AXP_CHG_ATTR(_name)                     \
-{                                               \
-	.attr = { .name = #_name, .mode = 0644 },    \
-	.show =  _name##_show,                      \
-	.store = _name##_store,                     \
-}
+
 
 #endif

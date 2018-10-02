@@ -1,28 +1,26 @@
-/*
- * drivers/power/axp/AXP2585/AXP2585.h
- * (C) Copyright 2010-2016
- * Allwinner Technology Co., Ltd. <www.allwinnertech.com>
- * Pannan <pannan@allwinnertech.com>
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as
- * published by the Free Software Foundation; either version 2 of
- * the License, or (at your option) any later version.
- *
- */
+
 #ifndef AXP2585_H_
 #define AXP2585_H_
 
 /* For AXP2585 */
-#define AXP2585_STATUS              (0x00)
+#define AXP2585_I2C_SLAVE_ADDR      (0x34)
+
+#define AXP2585_STATUS1             (0x00)
+#define AXP2585_STATUS2             (0x01)
+#define AXP2585_STATUS3             (0x02)
+#define AXP2585_STATUS4             (0x04)
+#define AXP2585_STATUS5             (0x05)
+
 #define AXP2585_IC_TYPE             (0x03)
+
+#define AXP2585_ILIMIT_REG          (0x10)
 #define AXP2585_GPIO1_CTL           (0x18)
 #define AXP2585_GPIO2_CTL           (0x19)
 #define AXP2585_GPIO1_SIGNAL        (0x1A)
 #define AXP2585_ADC_EN              (0x24)
-#define AXP2585_TS_PIN_CONTROL      (0x81)
 #define AXP2585_POK_SET             (0x15)
 #define AXP2585_OFF_CTL             (0x28)
+#define AXP2585_IRQ_REG_NUM          6
 #define AXP2585_INTEN1              (0x40)
 #define AXP2585_INTEN2              (0x41)
 #define AXP2585_INTEN3              (0x42)
@@ -35,6 +33,13 @@
 #define AXP2585_INTSTS4             (0x4B)
 #define AXP2585_INTSTS5             (0x4C)
 #define AXP2585_INTSTS6             (0x4D)
+#define AXP2585_IC_TEMP_REGH        (0x56)
+#define AXP2585_IC_TEMP_REGL        (0x57)
+#define AXP2585_TS_TEMP_REGH        (0x58)
+#define AXP2585_TS_TEMP_REGL        (0x59)
+
+#define AXP2585_TS_PIN_CONTROL      (0x81)
+
 #define AXP2585_WARNING_LEVEL       (0xE6)
 #define AXP2585_ADDR_EXTENSION      (0xFF)
 

@@ -9,19 +9,8 @@
 #include "myiic.h"
 #include "axp20X.h"
 
-#include "axp_rw_.h" 
-#include "axp_cou.h"
-#include "init.h"
+#include "axp-core.h"
 
-
-
-
- //Ð´º¯Êý
-extern void axp_write(int reg, u8 val);
- //¶Áº¯Êý
-extern void axp_read( int reg, u8 *val);
-
-//
 struct axp_charger charger_2585 ,*charger;
 
 

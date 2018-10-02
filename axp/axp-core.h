@@ -21,16 +21,6 @@
 #define ABS(x)		((x) > 0 ? (x) : -(x))
 
 
-
-
-struct axp_regmap_irq_chip {
-	const char *name;
-	unsigned int status_base;
-	unsigned int enable_base;
-	int num_regs;
-};
-
-
 int axp_i2c_write(struct axp_regmap *map, s32 reg, u8 val);
 int axp_i2c_writes(struct axp_regmap *map, s32 reg, s32 len, u8 *val);
 int axp_i2c_read(struct axp_regmap *map, s32 reg, u8 *val);

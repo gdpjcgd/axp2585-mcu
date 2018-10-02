@@ -14,12 +14,6 @@
 #ifndef AXP_CHARGER_H
 #define AXP_CHARGER_H
 
-#include <linux/power_supply.h>
-
-#ifdef CONFIG_ARCH_SUN8IW15P1
-/*#define TYPE_C*/
-#define AXP2585
-#endif
 
 #define BATRDC          100
 #define INTCHGCUR       300000      /* set initial charging current limite */
@@ -70,13 +64,7 @@
 #define OCVREG1E        0x62        /* 4.14V */
 #define OCVREG1F        0x64        /* 4.15V */
 
-#define AXP_OF_PROP_READ(name, def_value)\
-do {\
-	if (of_property_read_u32(node, #name, &axp_config->name))\
-		axp_config->name = def_value;\
-} while (0)
 
-struct axp_charger_dev;
 
 struct axp_config_info {
 	u32 pmu_used;
@@ -189,123 +177,15 @@ struct axp_config_info {
 	u32 pmu_bat_temp_para16;
 };
 
-struct axp_ac_info {
-	int det_bit;    /* ac detect */
-	int det_offset;
-	int valid_bit;  /* ac vali */
-	int valid_offset;
-	int in_short_bit;
-	int in_short_offset;
-	int ac_vol;
-	int ac_cur;
-	int (*get_ac_voltage)(struct axp_charger_dev *cdev);
-	int (*get_ac_current)(struct axp_charger_dev *cdev);
-	int (*set_ac_vhold)(struct axp_charger_dev *cdev, int vol);
-	int (*get_ac_vhold)(struct axp_charger_dev *cdev);
-	int (*set_ac_ihold)(struct axp_charger_dev *cdev, int cur);
-	int (*get_ac_ihold)(struct axp_charger_dev *cdev);
-};
-
-struct axp_usb_info {
-	int det_bit;
-	int det_offset;
-	int valid_bit;
-	int valid_offset;
-	int det_unused;
-	int usb_pc_vol;
-	int usb_pc_cur;
-	int usb_ad_vol;
-	int usb_ad_cur;
-	int (*get_usb_voltage)(struct axp_charger_dev *cdev);
-	int (*get_usb_current)(struct axp_charger_dev *cdev);
-	int (*set_usb_vhold)(struct axp_charger_dev *cdev, int vol);
-	int (*get_usb_vhold)(struct axp_charger_dev *cdev);
-	int (*set_usb_ihold)(struct axp_charger_dev *cdev, int cur);
-	int (*get_usb_ihold)(struct axp_charger_dev *cdev);
-};
-
-struct axp_battery_info {
-	int acpresent_bit;
-	int vbuspresent_bit;
-	int pwrsrc_offset;
-	int chgstat_bit;
-	int chgstat_offset;
-	int bat_temp_offset;
-	int det_bit;
-	int det_offset;
-	int det_valid_bit;
-	int det_valid;
-	int det_unused;
-	int cur_direction_bit;
-	int cur_direction_offset;
-	int polling_delay;
-	int runtime_chgcur;
-	int suspend_chgcur;
-	int shutdown_chgcur;
-	int (*get_rest_cap)(struct axp_charger_dev *cdev);
-	int (*get_bat_health)(struct axp_charger_dev *cdev);
-	int (*get_vbat)(struct axp_charger_dev *cdev);
-	int (*get_ibat)(struct axp_charger_dev *cdev);
-	int (*get_disibat)(struct axp_charger_dev *cdev);
-	int (*set_chg_cur)(struct axp_charger_dev *cdev, int cur);
-	int (*set_chg_vol)(struct axp_charger_dev *cdev, int vol);
-	int (*pre_time_set)(struct axp_charger_dev *cdev, int min);
-	int (*pos_time_set)(struct axp_charger_dev *cdev, int min);
-};
-
-#ifdef TYPE_C
-struct axp_tc_info {
-int det_bit;
-int det_offset;
-int valid_bit;
-int valid_offset;
-int det_unused;
-int tc_vol;
-int tc_cur;
-int (*get_tc_vol)(struct axp_charger_dev *cdev);
-int (*get_tc_cur)(struct axp_charger_dev *cdev);
-int (*set_tc_vhold)(struct axp_charger_dev *cdev, int vol);
-int (*get_tc_vhold)(struct axp_charger_dev *cdev);
-int (*set_tc_ihold)(struct axp_charger_dev *cdev, int cur);
-int (*get_tc_ihold)(struct axp_charger_dev *cdev);
-
-};
-#endif
-struct axp_supply_info {
-	struct axp_ac_info *ac;
-	struct axp_usb_info *usb;
-	struct axp_battery_info *batt;
-#ifdef TYPE_C
-	struct axp_tc_info *tc;
-#endif
-};
 
 struct axp_charger_dev {
-	struct power_supply *batt;
-	struct power_supply *ac;
-	struct power_supply *usb;
-#ifdef TYPE_C
-	struct power_supply *tc;
-#endif
-	struct power_supply_info *battery_info;
-	struct axp_supply_info *spy_info;
-	struct device *dev;
-	struct axp_dev *chip;
-	struct timer_list usb_status_timer;
-	struct delayed_work work;
-	struct delayed_work usbwork;
-	unsigned int interval;
-	struct mutex charger_lock;
 
 	int rest_vol;
 	int usb_vol;
 	int usb_cur;
 	int ac_vol;
 	int ac_cur;
-#ifdef TYPE_C
-	int tc_vol;
-	int tc_cur;
-#endif
+
 	int bat_vol;
 	int bat_cur;
 	int bat_discur;
@@ -315,10 +195,7 @@ struct axp_charger_dev {
 	bool usb_det;
 	bool ac_valid;
 	bool usb_valid;
-#ifdef TYPE_C
-	bool tc_det;
-	bool tc_valid;
-#endif
+
 	bool ext_valid;
 	bool in_short;
 	bool charging;
@@ -334,8 +211,6 @@ struct axp_charger_dev {
 	s32 bat_temp;
 
 	struct axp_adc_res *adc;
-
-	void (*private_debug)(struct axp_charger_dev *cdev);
 };
 
 struct axp_adc_res {
@@ -351,11 +226,6 @@ struct axp_adc_res {
 	uint16_t ts_res;
 };
 
-struct axp_charger_dev *axp_power_supply_register(struct device *dev,
-					struct axp_dev *axp_dev,
-					struct power_supply_info *battery_info,
-					struct axp_supply_info *info);
-void axp_power_supply_unregister(struct axp_charger_dev *chg_dev);
 void axp_change(struct axp_charger_dev *chg_dev);
 void axp_usbac_in(struct axp_charger_dev *chg_dev);
 void axp_usbac_out(struct axp_charger_dev *chg_dev);
@@ -365,18 +235,14 @@ void axp_charger_resume(struct axp_charger_dev *chg_dev);
 void axp_charger_shutdown(struct axp_charger_dev *chg_dev);
 int axp_charger_dt_parse(struct device_node *node,
 					struct axp_config_info *axp_config);
-extern irqreturn_t axp_usb_in_isr(int irq, void *data);
-extern irqreturn_t axp_usb_out_isr(int irq, void *data);
-extern irqreturn_t axp_ac_in_isr(int irq, void *data);
-extern irqreturn_t axp_ac_out_isr(int irq, void *data);
-extern irqreturn_t axp_capchange_isr(int irq, void *data);
-extern irqreturn_t axp_change_isr(int irq, void *data);
-extern irqreturn_t axp_low_warning1_isr(int irq, void *data);
-extern irqreturn_t axp_low_warning2_isr(int irq, void *data);
-#ifdef TYPE_C
-extern irqreturn_t axp_tc_in_isr(int irq, void *data);
-extern irqreturn_t axp_tc_out_isr(int irq, void *data);
-#endif
+extern axp_usb_in_isr(int irq, void *data);
+extern axp_usb_out_isr(int irq, void *data);
+extern axp_ac_in_isr(int irq, void *data);
+extern axp_ac_out_isr(int irq, void *data);
+extern axp_capchange_isr(int irq, void *data);
+extern axp_change_isr(int irq, void *data);
+extern axp_low_warning1_isr(int irq, void *data);
+extern axp_low_warning2_isr(int irq, void *data);
 
 
 #endif /* AXP_ChARGER_H */
