@@ -42,6 +42,10 @@
 #define AXP2585_COULOMB_CTL              (0xB8)
 #define AXP2585_ADJUST_PARA              (0xE8)
 #define AXP2585_ADJUST_PARA1             (0xE9)
-
+enum{
+	BC_SDP=1,
+	BC_CDP,
+	BC_DCP
+};
 
 #endif
